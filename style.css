@@ -132,19 +132,19 @@ footer span {
     overflow-x: auto;
 }
 
-.table::-webkit-scrollbar{
-    height: 5px;
+.table::-webkit-scrollbar {
+    height: 10px;
     width: 1px;
 }
 
 .table::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 10px;
-  }
-  
-  .table::-webkit-scrollbar-track {
+}
+
+.table::-webkit-scrollbar-track {
     background-color: #f1f1f1;
-  }
+}
 
 #student-table {
     width: 100%;
@@ -207,6 +207,15 @@ footer span {
 
 /* responsive */
 @media (max-width: 1023px) {
+    body {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .table::-webkit-scrollbar {
+        height: 5px;
+        width: 1px;
+    }
+
     #patch-form {
         width: 80%;
         max-height: 80%;

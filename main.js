@@ -152,7 +152,7 @@ function handlePatchForm(id) {
         var email = emailInput.value;
 
         if (name && genderRadios && dateOfBirth && (email === "" || emailInput.checkValidity())) {
-                var phoneNumberPattern = /^0\d{9}$/;
+            var phoneNumberPattern = /^0\d{9}$/;
             if (phoneNumber === "" || phoneNumberPattern.test(phoneNumber)) {
                 phoneNumberInput.setCustomValidity("");
                 var newStudent = {
