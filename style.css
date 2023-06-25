@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Roboto", sans-serif;
+}
+
+.mt10 {
+    margin-top: 10px !important;
+}
+
+.mt20 {
+    margin-top: 20px !important;
+}
+
+.ml15 {
+    margin-left: 15px !important;
+}
+
+.mr10 {
+    margin-right: 10px !important;
+}
+
+.wide {
+    min-width: 768px;
+    width: auto;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+footer {
+    margin-top: 50px;
+    background-color: #097021;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer span {
+    color: #fff;
+}
+
+/* post form */
+#post-form {
+    width: 100%;
+    border: 1px solid #e0e4e8;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.post-form__header,
+.patch-form__header {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #fff;
+}
+
+.post-form__main {
+    padding: 20px;
+}
+
+.post-form__main .description {
+    float: right;
+}
+
+.post-form__main span,
+.patch-form__main span {
+    color: #dc3545;
+    margin-left: 5px;
+}
+
+.post-form__main .label-input,
+.patch-form__main .label-input {
+    display: inline-block;
+    margin: 5px 0;
+}
+
+#post-form input:not([type="radio"]),
+#patch-form input:not([type="radio"]) {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e4e8;
+    border-radius: 3px;
+}
+
+#post-form input:not([type="radio"]):focus,
+#patch-form input:not([type="radio"]):focus {
+    border: 1px solid #c5c8cc;
+    outline: none;
+    box-shadow: 5px 5px 5px #e0e4e8;
+}
+
+#post-form input[type="radio"],
+#patch-form input[type="radio"] {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.btn--green {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn--yellow {
+    background-color: #ffc107;
+}
+
+.btn--red {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* table */
+#student-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#student-table thead {
+    background-color: #28a745;
+}
+
+#student-table tbody {
+    text-align: center;
+}
+
+#student-table th,
+#student-table td {
+    padding: 10px;
+    border-color: #d8e0e1;
+}
+
+/* patch form */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    opacity: 0.5;
+}
+
+.overlay.active {
+    display: block;
+}
+
+#patch-form {
+    width: 60%;
+    position: fixed;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border: 1px solid #e0e4e8;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: transform ease-in-out 250ms;
+}
+
+#patch-form.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.patch-form__main {
+    padding: 20px;
+}

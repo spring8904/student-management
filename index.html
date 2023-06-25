@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Quản lý sinh viên</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="wide">
+            <div id="post-form">
+                <div class="post-form__header">
+                    <span>Thêm sinh viên</span>
+                </div>
+                <form class="post-form__main">
+                    <span class="description">* Thông tin bắt buộc</span>
+                    <div>
+                        <label class="label-input" for="name">Họ và tên<span>*</span></label>
+                        <input type="text" name="name" id="name" required />
+                    </div>
+                    <div>
+                        <label class="label-input mt10">Giới tính<span>*</span></label>
+                        <label><input type="radio" name="gender" value="Nam" required />Nam</label>
+                        <label><input class="ml15" type="radio" name="gender" value="Nữ" required />Nữ</label>
+                    </div>
+                    <div>
+                        <label class="label-input" for="date-of-birth">Ngày sinh<span>*</span></label>
+                        <input type="date" name="dateOfBirth" id="date-of-birth" required />
+                    </div>
+                    <div>
+                        <label class="label-input" for="address">Địa chỉ</label>
+                        <input type="text" name="address" id="address" />
+                    </div>
+                    <div>
+                        <label class="label-input" for="phone-number">Số điện thoại</label>
+                        <input type="number" name="phoneNumber" id="phone-number"/>
+                    </div>
+                    <button id="post-btn" class="mt20 mr10 btn btn--green" type="submit">Thêm</button>
+                    <button class="btn btn--yellow" type="reset">Nhập lại</button>
+                </form>
+            </div>
+            <table id="student-table" border="1">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>MSV</th>
+                        <th>Họ Tên</th>
+                        <th>Giới Tính</th>
+                        <th>Ngày Sinh</th>
+                        <th>Địa Chỉ</th>
+                        <th>SĐT</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Nguyễn Xuân Lâm</td>
+                        <td>Nam</td>
+                        <td>08/09/2004</td>
+                        <td>Hà Nội</td>
+                        <td>0339735022</td>
+                        <td><button id="patch-btn" onclick="handlePatchForm()" class="btn btn--yellow">Sửa</button></td>
+                        <td><button class="btn btn--red">Xóa</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="overlay"></div>
+        <div id="patch-form">
+            <div class="patch-form__header">
+                <span>Sửa thông tin sinh viên</span>
+            </div>
+            <form class="patch-form__main">
+                <div>
+                    <label class="label-input" for="name">Họ và tên<span>*</span></label>
+                    <input type="text" name="name" id="name" required />
+                </div>
+                <div>
+                    <label class="label-input mt10">Giới tính<span>*</span></label>
+                    <label><input type="radio" name="gender" value="Nam" required />Nam</label>
+                    <label><input class="ml15" type="radio" name="gender" value="Nữ" required />Nữ</label>
+                </div>
+                <div>
+                    <label class="label-input" for="date-of-birth">Ngày sinh<span>*</span></label>
+                    <input type="date" name="dateOfBirth" id="date-of-birth" required />
+                </div>
+                <div>
+                    <label class="label-input" for="address">Địa chỉ</label>
+                    <input type="text" name="address" id="address" />
+                </div>
+                <div>
+                    <label class="label-input" for="phone-number">Số điện thoại</label>
+                    <input type="number" name="phoneNumber" id="phone-number"/>
+                </div>
+                <button id="confirm-patch-btn" class="mt20 mr10 btn btn--green" type="submit">Sửa</button>
+                <button class="btn btn--yellow" type="reset">Nhập lại</button>
+            </form>
+        </div>
+        <footer><span>Powered by Spring :))</span></footer>
+        <script src="main.js"></script>
+    </body>
+</html>
