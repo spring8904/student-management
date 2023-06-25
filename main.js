@@ -28,6 +28,7 @@ function renderStudents(students) {
         <td>${formatDate(student.dateOfBirth)}</td>
         <td>${student.address}</td>
         <td>${student.phoneNumber}</td>
+        <td>${student.email}</td>
         <td><button class="btn btn--yellow" onclick="handlePatchForm(${student.id})">Sửa</button></td>
         <td><button class="btn btn--red" onclick="handleDeleteStudent(${student.id})">Xóa</button></td>
     </tr>`
@@ -97,8 +98,10 @@ function handlePostForm() {
         var address = postForm.querySelector('input[name="address"]').value;
         var phoneNumberInput = postForm.querySelector('input[name="phoneNumber"]');
         var phoneNumber = phoneNumberInput.value;
+        var emailInput = postForm.querySelector('input[name="email"]');
+        var email = emailInput.value;
 
-        if (name && genderRadios && dateOfBirth) {
+        if (name && genderRadios && dateOfBirth && (email === "" || emailInput.checkValidity())) {
             var phoneNumberPattern = /^0\d{9}$/;
             if (phoneNumberPattern.test(phoneNumber) || phoneNumber === "") {
                 phoneNumberInput.setCustomValidity("");
@@ -108,6 +111,7 @@ function handlePostForm() {
                     dateOfBirth: dateOfBirth,
                     address: address,
                     phoneNumber: phoneNumber,
+                    email: email,
                 };
 
                 handlePostStudent(newStudent);
@@ -144,8 +148,11 @@ function handlePatchForm(id) {
         var address = patchForm.querySelector('input[name="address"]').value;
         var phoneNumberInput = patchForm.querySelector('input[name="phoneNumber"]');
         var phoneNumber = phoneNumberInput.value;
-        if (name && genderRadios && dateOfBirth) {
-            var phoneNumberPattern = /^0\d{9}$/;
+        var emailInput = patchForm.querySelector('input[name="email"]');
+        var email = emailInput.value;
+
+        if (name && genderRadios && dateOfBirth && (email === "" || emailInput.checkValidity())) {
+                var phoneNumberPattern = /^0\d{9}$/;
             if (phoneNumber === "" || phoneNumberPattern.test(phoneNumber)) {
                 phoneNumberInput.setCustomValidity("");
                 var newStudent = {
@@ -154,6 +161,7 @@ function handlePatchForm(id) {
                     dateOfBirth: dateOfBirth,
                     address: address,
                     phoneNumber: phoneNumber,
+                    email: email,
                 };
                 handlePatchStudent(id, newStudent);
                 overlay.classList.remove("active");
@@ -177,6 +185,7 @@ function fillPatchForm(id) {
     patchForm.querySelector('input[name="dateOfBirth"]').value = formatDateForInput(student.dateOfBirth);
     patchForm.querySelector('input[name="address"]').value = student.address;
     patchForm.querySelector('input[name="phoneNumber"]').value = student.phoneNumber;
+    patchForm.querySelector('input[name="email"]').value = student.email;
 }
 
 function getStudentById(id) {
@@ -195,6 +204,7 @@ function getStudentById(id) {
                 dateOfBirth: studentRows[i].querySelector("td:nth-child(5)").textContent,
                 address: studentRows[i].querySelector("td:nth-child(6)").textContent,
                 phoneNumber: studentRows[i].querySelector("td:nth-child(7)").textContent,
+                email: studentRows[i].querySelector("td:nth-child(8)").textContent,
             };
         }
     }

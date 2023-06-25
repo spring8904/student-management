@@ -27,9 +27,8 @@ html {
 }
 
 .wide {
-    min-width: 768px;
-    width: auto;
-    max-width: 1080px;
+    width: 100%;
+    max-width: 1024px;
     margin: 0 auto;
 }
 
@@ -39,6 +38,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
 }
 
 footer span {
@@ -128,10 +128,27 @@ footer span {
 }
 
 /* table */
+.table {
+    overflow-x: auto;
+}
+
+.table::-webkit-scrollbar{
+    height: 5px;
+    width: 1px;
+}
+
+.table::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+  }
+  
+  .table::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+
 #student-table {
     width: 100%;
     margin-top: 20px;
-    margin-bottom: 50px;
     border-collapse: collapse;
 }
 
@@ -145,6 +162,8 @@ footer span {
 
 #student-table th,
 #student-table td {
+    white-space: nowrap;
+    min-width: 60px;
     padding: 10px;
     border-color: #d8e0e1;
 }
@@ -174,7 +193,7 @@ footer span {
     transform: translate(-50%, -50%) scale(0);
     border: 1px solid #e0e4e8;
     border-radius: 3px;
-    overflow: hidden;
+    overflow-y: auto;
     transition: transform ease-in-out 250ms;
 }
 
@@ -184,4 +203,18 @@ footer span {
 
 .patch-form__main {
     padding: 20px;
+}
+
+/* responsive */
+@media (max-width: 1023px) {
+    #patch-form {
+        width: 80%;
+        max-height: 80%;
+    }
+}
+
+@media (max-width: 767px) {
+    #patch-form {
+        max-height: 60%;
+    }
 }
