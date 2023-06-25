@@ -10,6 +10,10 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
+body {
+    height: 100vh;
+}
+
 .mt10 {
     margin-top: 10px !important;
 }
@@ -34,6 +38,10 @@ html {
 }
 
 footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #097021;
     height: 50px;
     display: flex;
