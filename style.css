@@ -10,10 +10,6 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
-body {
-    height: 100vh;
-}
-
 .mt10 {
     margin-top: 10px !important;
 }
