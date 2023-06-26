@@ -129,12 +129,14 @@ footer span {
 
 /* table */
 .table {
-    overflow-x: auto;
+    overflow: auto;
+    margin-top: 20px;
+    max-height: 550px;
 }
 
 .table::-webkit-scrollbar {
     height: 10px;
-    width: 1px;
+    width: 10px;
 }
 
 .table::-webkit-scrollbar-thumb {
@@ -147,8 +149,6 @@ footer span {
 }
 
 #student-table {
-    width: 100%;
-    margin-top: 20px;
     border-collapse: collapse;
 }
 
@@ -213,7 +213,7 @@ footer span {
 
     .table::-webkit-scrollbar {
         height: 5px;
-        width: 1px;
+        width: 5px;
     }
 
     #patch-form {

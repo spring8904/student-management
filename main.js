@@ -101,21 +101,22 @@ function handlePostForm() {
         var emailInput = postForm.querySelector('input[name="email"]');
         var email = emailInput.value;
 
-        if (name && genderRadios && dateOfBirth && (email === "" || emailInput.checkValidity())) {
+        if (name && genderRadios && dateOfBirth) {
             var phoneNumberPattern = /^0\d{9}$/;
-            if (phoneNumberPattern.test(phoneNumber) || phoneNumber === "") {
+            if (phoneNumber === "" || phoneNumberPattern.test(phoneNumber)) {
                 phoneNumberInput.setCustomValidity("");
-                var newStudent = {
-                    name: name,
-                    gender: getSelectedGender(genderRadios),
-                    dateOfBirth: dateOfBirth,
-                    address: address,
-                    phoneNumber: phoneNumber,
-                    email: email,
-                };
-
-                handlePostStudent(newStudent);
-                alert("Thêm thành công");
+                if (email === "" || emailInput.checkValidity()) {
+                    var newStudent = {
+                        name: name,
+                        gender: getSelectedGender(genderRadios),
+                        dateOfBirth: dateOfBirth,
+                        address: address,
+                        phoneNumber: phoneNumber,
+                        email: email,
+                    };
+                    handlePostStudent(newStudent);
+                    alert("Thêm thành công");
+                }
             } else {
                 phoneNumberInput.setCustomValidity("Số điện thoại không hợp lệ");
             }
@@ -151,21 +152,23 @@ function handlePatchForm(id) {
         var emailInput = patchForm.querySelector('input[name="email"]');
         var email = emailInput.value;
 
-        if (name && genderRadios && dateOfBirth && (email === "" || emailInput.checkValidity())) {
+        if (name && genderRadios && dateOfBirth) {
             var phoneNumberPattern = /^0\d{9}$/;
             if (phoneNumber === "" || phoneNumberPattern.test(phoneNumber)) {
                 phoneNumberInput.setCustomValidity("");
-                var newStudent = {
-                    name: name,
-                    gender: getSelectedGender(genderRadios),
-                    dateOfBirth: dateOfBirth,
-                    address: address,
-                    phoneNumber: phoneNumber,
-                    email: email,
-                };
-                handlePatchStudent(id, newStudent);
-                overlay.classList.remove("active");
-                patchForm.classList.remove("active");
+                if (email === "" || emailInput.checkValidity()) {
+                    var newStudent = {
+                        name: name,
+                        gender: getSelectedGender(genderRadios),
+                        dateOfBirth: dateOfBirth,
+                        address: address,
+                        phoneNumber: phoneNumber,
+                        email: email,
+                    };
+                    handlePatchStudent(id, newStudent);
+                    overlay.classList.remove("active");
+                    patchForm.classList.remove("active");
+                }
             } else {
                 phoneNumberInput.setCustomValidity("Số điện thoại không hợp lệ");
             }
