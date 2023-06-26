@@ -1,4 +1,4 @@
-const STUDENT_API = "http://localhost:3000/student";
+const studentsAPI = "https://6499635779fbe9bcf83f2553.mockapi.io/api/v1/students";
 
 function start() {
     getStudent((students) => {
@@ -11,7 +11,7 @@ function start() {
 start();
 
 function getStudent(callback) {
-    fetch(STUDENT_API)
+    fetch(studentsAPI)
         .then((response) => response.json())
         .then(callback);
 }
@@ -29,7 +29,7 @@ function renderStudents(students) {
         <td>${student.address}</td>
         <td>${student.phoneNumber}</td>
         <td>${student.email}</td>
-        <td><button class="btn btn--yellow" onclick="handlePatchForm(${student.id})">Sửa</button></td>
+        <td><button class="btn btn--yellow" onclick="handlePutForm(${student.id})">Sửa</button></td>
         <td><button class="btn btn--red" onclick="handleDeleteStudent(${student.id})">Xóa</button></td>
     </tr>`
     );
@@ -37,7 +37,7 @@ function renderStudents(students) {
 }
 
 function handlePostStudent(data) {
-    fetch(STUDENT_API, {
+    fetch(studentsAPI, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -53,7 +53,7 @@ function handlePostStudent(data) {
 }
 
 function handleDeleteStudent(id) {
-    fetch(STUDENT_API + "/" + id, {
+    fetch(studentsAPI + "/" + id, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -67,9 +67,9 @@ function handleDeleteStudent(id) {
         );
 }
 
-function handlePatchStudent(id, data) {
-    fetch(STUDENT_API + "/" + id, {
-        method: "PATCH",
+function handlePutStudent(id, data) {
+    fetch(studentsAPI + "/" + id, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
@@ -124,32 +124,32 @@ function handlePostForm() {
     };
 }
 
-function handlePatchForm(id) {
+function handlePutForm(id) {
     var overlay = document.querySelector(".overlay");
-    var patchForm = document.querySelector("#patch-form");
+    var putForm = document.querySelector("#put-form");
 
     overlay.classList.add("active");
-    patchForm.classList.add("active");
+    putForm.classList.add("active");
 
     overlay.onclick = () => {
         overlay.classList.remove("active");
-        patchForm.classList.remove("active");
+        putForm.classList.remove("active");
     };
 
-    patchForm.addEventListener("submit", function (event) {
+    putForm.addEventListener("submit", function (event) {
         event.preventDefault();
     });
 
-    var confirmPatchBtn = patchForm.querySelector("#confirm-patch-btn");
+    var confirmPutBtn = putForm.querySelector("#confirm-put-btn");
 
-    confirmPatchBtn.onclick = function () {
-        var name = patchForm.querySelector('input[name="name"]').value;
-        var genderRadios = patchForm.querySelectorAll('input[name="gender"]');
-        var dateOfBirth = patchForm.querySelector('input[name="dateOfBirth"]').value;
-        var address = patchForm.querySelector('input[name="address"]').value;
-        var phoneNumberInput = patchForm.querySelector('input[name="phoneNumber"]');
+    confirmPutBtn.onclick = function () {
+        var name = putForm.querySelector('input[name="name"]').value;
+        var genderRadios = putForm.querySelectorAll('input[name="gender"]');
+        var dateOfBirth = putForm.querySelector('input[name="dateOfBirth"]').value;
+        var address = putForm.querySelector('input[name="address"]').value;
+        var phoneNumberInput = putForm.querySelector('input[name="phoneNumber"]');
         var phoneNumber = phoneNumberInput.value;
-        var emailInput = patchForm.querySelector('input[name="email"]');
+        var emailInput = putForm.querySelector('input[name="email"]');
         var email = emailInput.value;
 
         if (name && genderRadios && dateOfBirth) {
@@ -165,9 +165,9 @@ function handlePatchForm(id) {
                         phoneNumber: phoneNumber,
                         email: email,
                     };
-                    handlePatchStudent(id, newStudent);
+                    handlePutStudent(id, newStudent);
                     overlay.classList.remove("active");
-                    patchForm.classList.remove("active");
+                    putForm.classList.remove("active");
                 }
             } else {
                 phoneNumberInput.setCustomValidity("Số điện thoại không hợp lệ");
@@ -175,20 +175,20 @@ function handlePatchForm(id) {
         }
     };
 
-    fillPatchForm(id);
+    fillPutForm(id);
 }
 
-function fillPatchForm(id) {
+function fillPutForm(id) {
     // Lấy dữ liệu sinh viên từ bảng
     var student = getStudentById(id);
     // Gán giá trị vào các trường nhập liệu trong form
-    var patchForm = document.querySelector("#patch-form");
-    patchForm.querySelector('input[name="name"]').value = student.name;
-    patchForm.querySelector('input[value="' + student.gender + '"]').checked = true;
-    patchForm.querySelector('input[name="dateOfBirth"]').value = formatDateForInput(student.dateOfBirth);
-    patchForm.querySelector('input[name="address"]').value = student.address;
-    patchForm.querySelector('input[name="phoneNumber"]').value = student.phoneNumber;
-    patchForm.querySelector('input[name="email"]').value = student.email;
+    var putForm = document.querySelector("#put-form");
+    putForm.querySelector('input[name="name"]').value = student.name;
+    putForm.querySelector('input[value="' + student.gender + '"]').checked = true;
+    putForm.querySelector('input[name="dateOfBirth"]').value = formatDateForInput(student.dateOfBirth);
+    putForm.querySelector('input[name="address"]').value = student.address;
+    putForm.querySelector('input[name="phoneNumber"]').value = student.phoneNumber;
+    putForm.querySelector('input[name="email"]').value = student.email;
 }
 
 function getStudentById(id) {

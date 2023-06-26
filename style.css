@@ -54,7 +54,7 @@ footer span {
 }
 
 .post-form__header,
-.patch-form__header {
+.put-form__header {
     padding: 10px 15px;
     background-color: #28a745;
     color: #fff;
@@ -69,19 +69,19 @@ footer span {
 }
 
 .post-form__main span,
-.patch-form__main span {
+.put-form__main span {
     color: #dc3545;
     margin-left: 5px;
 }
 
 .post-form__main .label-input,
-.patch-form__main .label-input {
+.put-form__main .label-input {
     display: inline-block;
     margin: 5px 0;
 }
 
 #post-form input:not([type="radio"]),
-#patch-form input:not([type="radio"]) {
+#put-form input:not([type="radio"]) {
     width: 100%;
     padding: 10px;
     border: 1px solid #e0e4e8;
@@ -89,14 +89,14 @@ footer span {
 }
 
 #post-form input:not([type="radio"]):focus,
-#patch-form input:not([type="radio"]):focus {
+#put-form input:not([type="radio"]):focus {
     border: 1px solid #c5c8cc;
     outline: none;
     box-shadow: 5px 5px 5px #e0e4e8;
 }
 
 #post-form input[type="radio"],
-#patch-form input[type="radio"] {
+#put-form input[type="radio"] {
     margin-left: 5px;
     margin-right: 5px;
 }
@@ -149,6 +149,7 @@ footer span {
 }
 
 #student-table {
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -168,7 +169,7 @@ footer span {
     border-color: #d8e0e1;
 }
 
-/* patch form */
+/* put form */
 .overlay {
     display: none;
     position: fixed;
@@ -184,7 +185,7 @@ footer span {
     display: block;
 }
 
-#patch-form {
+#put-form {
     width: 60%;
     position: fixed;
     background-color: #fff;
@@ -197,11 +198,11 @@ footer span {
     transition: transform ease-in-out 250ms;
 }
 
-#patch-form.active {
+#put-form.active {
     transform: translate(-50%, -50%) scale(1);
 }
 
-.patch-form__main {
+.put-form__main {
     padding: 20px;
 }
 
@@ -216,14 +217,14 @@ footer span {
         width: 5px;
     }
 
-    #patch-form {
+    #put-form {
         width: 80%;
         max-height: 80%;
     }
 }
 
 @media (max-width: 767px) {
-    #patch-form {
+    #put-form {
         max-height: 60%;
     }
 }
