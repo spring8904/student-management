@@ -16,16 +16,16 @@
                     <span class="description">* Thông tin bắt buộc</span>
                     <div>
                         <label class="label-input" for="name">Họ và tên<span>*</span></label>
-                        <input type="text" name="name" id="name" required />
+                        <input type="text" name="name" id="name" />
                     </div>
                     <div>
                         <label class="label-input mt10">Giới tính<span>*</span></label>
-                        <label><input type="radio" name="gender" value="Nam" required />Nam</label>
-                        <label><input class="ml15" type="radio" name="gender" value="Nữ" required />Nữ</label>
+                        <label><input type="radio" name="gender" value="Nam" />Nam</label>
+                        <label><input class="ml15" type="radio" name="gender" value="Nữ" />Nữ</label>
                     </div>
                     <div>
                         <label class="label-input" for="date-of-birth">Ngày sinh<span>*</span></label>
-                        <input type="date" name="dateOfBirth" id="date-of-birth" required />
+                        <input type="date" name="dateOfBirth" id="date-of-birth" />
                     </div>
                     <div>
                         <label class="label-input" for="address">Địa chỉ</label>
@@ -37,7 +37,7 @@
                     </div>
                     <div>
                         <label class="label-input" for="email">Email</label>
-                        <input type="email" name="email" id="email" />
+                        <input type="text" name="email" id="email" />
                     </div>
                     <button id="post-btn" class="mt20 mr10 btn btn--green" type="submit">Thêm</button>
                     <button class="btn btn--yellow" type="reset">Nhập lại</button>
@@ -81,23 +81,23 @@
             <footer><span>Powered by Spring :))</span></footer>
         </div>
         <div class="overlay"></div>
-        <div id="put-form">
+        <div id="put-form" class="modal">
             <div class="put-form__header">
                 <span>Sửa thông tin sinh viên</span>
             </div>
             <form class="put-form__main">
                 <div>
                     <label class="label-input" for="name">Họ và tên<span>*</span></label>
-                    <input type="text" name="name" id="name" required />
+                    <input type="text" name="name" id="name" />
                 </div>
                 <div>
                     <label class="label-input mt10">Giới tính<span>*</span></label>
-                    <label><input type="radio" name="gender" value="Nam" required />Nam</label>
-                    <label><input class="ml15" type="radio" name="gender" value="Nữ" required />Nữ</label>
+                    <label><input type="radio" name="gender" value="Nam" />Nam</label>
+                    <label><input class="ml15" type="radio" name="gender" value="Nữ" />Nữ</label>
                 </div>
                 <div>
                     <label class="label-input" for="date-of-birth">Ngày sinh<span>*</span></label>
-                    <input type="date" name="dateOfBirth" id="date-of-birth" required />
+                    <input type="date" name="dateOfBirth" id="date-of-birth" />
                 </div>
                 <div>
                     <label class="label-input" for="address">Địa chỉ</label>
@@ -109,11 +109,17 @@
                 </div>
                 <div>
                     <label class="label-input" for="email">Email</label>
-                    <input type="email" name="email" id="email" />
+                    <input type="text" name="email" id="email" />
                 </div>
                 <button id="confirm-put-btn" class="mt20 mr10 btn btn--green" type="submit">Sửa</button>
                 <button class="btn btn--yellow" type="reset">Nhập lại</button>
             </form>
+        </div>
+        <div class="notice modal">
+            <div class="content">Đây là thông báo</div>
+            <div class="notice-btn">
+                <button class="btn btn--blue">OK</button>
+            </div>
         </div>
         <script src="main.js"></script>
     </body>

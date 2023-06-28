@@ -45,12 +45,20 @@ footer span {
     color: #fff;
 }
 
-/* post form */
+/* post & put form */
 #post-form {
     width: 100%;
     border: 1px solid #e0e4e8;
     border-radius: 3px;
     overflow: hidden;
+}
+
+#put-form {
+    width: 60%;
+}
+
+#put-form.active {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .post-form__header,
@@ -60,7 +68,8 @@ footer span {
     color: #fff;
 }
 
-.post-form__main {
+.post-form__main,
+.put-form__main {
     padding: 20px;
 }
 
@@ -127,6 +136,11 @@ footer span {
     color: #fff;
 }
 
+.btn--blue {
+    background-color: #2f7de3;
+    color: #fff;
+}
+
 /* table */
 .table {
     overflow: auto;
@@ -169,7 +183,7 @@ footer span {
     border-color: #d8e0e1;
 }
 
-/* put form */
+/* modal */
 .overlay {
     display: none;
     position: fixed;
@@ -185,25 +199,41 @@ footer span {
     display: block;
 }
 
-#put-form {
-    width: 60%;
+.modal {
     position: fixed;
     background-color: #fff;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     border: 1px solid #e0e4e8;
+    box-shadow: 0 0 5px #4d4a4a;
     border-radius: 3px;
     overflow-y: auto;
     transition: transform ease-in-out 250ms;
 }
 
-#put-form.active {
+.notice {
+    width: 40%;
+}
+
+.notice.active {
     transform: translate(-50%, -50%) scale(1);
 }
 
-.put-form__main {
+.notice .content {
     padding: 20px;
+    color: #1c1b1b;
+    border-bottom: 1px solid #ccc;
+}
+
+.notice-btn {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: end;
+}
+
+.notice-btn .btn {
+    padding: 5px 18px;
 }
 
 /* responsive */
@@ -220,6 +250,10 @@ footer span {
     #put-form {
         width: 80%;
         max-height: 80%;
+    }
+
+    .notice {
+        width: 70%;
     }
 }
 

@@ -1,25 +1,24 @@
 const studentsAPI = "https://6499635779fbe9bcf83f2553.mockapi.io/api/v1/students";
 
 function start() {
-    getStudent((students) => {
-        renderStudents(students);
-    });
+    getStudents(renderStudents);
 
     handlePostForm();
 }
 
 start();
 
-function getStudent(callback) {
+//--- Functions
+function getStudents(callback) {
     fetch(studentsAPI)
         .then((response) => response.json())
         .then(callback);
 }
 
 function renderStudents(students) {
-    var studentTableBody = document.querySelector("#student-table tbody");
-    var count = 1;
-    var htmls = students.map(
+    const studentTableBody = document.querySelector("#student-table tbody");
+    let count = 1;
+    const htmls = students.map(
         (student) => `<tr>
         <td>${count++}</td>
         <td>${student.id}</td>
@@ -45,11 +44,10 @@ function handlePostStudent(data) {
         body: JSON.stringify(data),
     })
         .then((response) => response.json())
-        .then(() =>
-            getStudent((students) => {
-                renderStudents(students);
-            })
-        );
+        .then(() => {
+            getStudents(renderStudents);
+            showNotice("Thêm thành công");
+        });
 }
 
 function handleDeleteStudent(id) {
@@ -60,11 +58,10 @@ function handleDeleteStudent(id) {
         },
     })
         .then((response) => response.json())
-        .then(() =>
-            getStudent((students) => {
-                renderStudents(students);
-            })
-        );
+        .then(() => {
+            getStudents(renderStudents);
+            showNotice("Xóa thành công");
+        });
 }
 
 function handlePutStudent(id, data) {
@@ -76,57 +73,75 @@ function handlePutStudent(id, data) {
         body: JSON.stringify(data),
     })
         .then((response) => response.json())
-        .then(() =>
-            getStudent((students) => {
-                renderStudents(students);
-            })
-        );
+        .then(() => {
+            getStudents(renderStudents);
+            showNotice("Sửa thành công");
+        });
 }
 
 function handlePostForm() {
-    var postForm = document.querySelector("#post-form");
-    var postBtn = postForm.querySelector("#post-btn");
+    const postForm = document.querySelector("#post-form");
+    const postBtn = postForm.querySelector("#post-btn");
 
     postForm.addEventListener("submit", function (event) {
         event.preventDefault();
     });
 
     postBtn.onclick = function () {
-        var name = postForm.querySelector('input[name="name"]').value;
-        var genderRadios = postForm.querySelectorAll('input[name="gender"]');
-        var dateOfBirth = postForm.querySelector('input[name="dateOfBirth"]').value;
-        var address = postForm.querySelector('input[name="address"]').value;
-        var phoneNumberInput = postForm.querySelector('input[name="phoneNumber"]');
-        var phoneNumber = phoneNumberInput.value;
-        var emailInput = postForm.querySelector('input[name="email"]');
-        var email = emailInput.value;
+        const name = postForm.querySelector('input[name="name"]').value;
+        const genderRadios = postForm.querySelectorAll('input[name="gender"]');
+        const selectedGender = getSelectedGender(genderRadios);
+        const dateOfBirth = postForm.querySelector('input[name="dateOfBirth"]').value;
+        const address = postForm.querySelector('input[name="address"]').value;
+        const phoneNumber = postForm.querySelector('input[name="phoneNumber"]').value;
+        const email = postForm.querySelector('input[name="email"]').value;
 
-        if (name && genderRadios && dateOfBirth) {
-            var phoneNumberPattern = /^0\d{9}$/;
-            if (phoneNumber === "" || phoneNumberPattern.test(phoneNumber)) {
-                phoneNumberInput.setCustomValidity("");
-                if (email === "" || emailInput.checkValidity()) {
-                    var newStudent = {
-                        name: name,
-                        gender: getSelectedGender(genderRadios),
-                        dateOfBirth: dateOfBirth,
-                        address: address,
-                        phoneNumber: phoneNumber,
-                        email: email,
-                    };
-                    handlePostStudent(newStudent);
-                    alert("Thêm thành công");
-                }
-            } else {
-                phoneNumberInput.setCustomValidity("Số điện thoại không hợp lệ");
-            }
+        if (!name) {
+            showNotice("Bạn cần nhập họ tên!");
+            return;
         }
+
+        if (!selectedGender) {
+            showNotice("Bạn cần chọn giới tính!");
+            return;
+        }
+
+        if (!dateOfBirth) {
+            showNotice("Bạn cần nhập ngày sinh!");
+            return;
+        }
+
+        if (!(phoneNumber === "" || isPhoneNumber(phoneNumber))) {
+            showNotice("Số điện thoại không hợp lệ!");
+            return;
+        }
+
+        if (!(email === "" || isEmail(email))) {
+            showNotice("Email không hợp lệ");
+            return;
+        }
+
+        const newStudent = {
+            name,
+            gender: selectedGender,
+            dateOfBirth,
+            address,
+            phoneNumber,
+            email,
+        };
+
+        handlePostStudent(newStudent);
     };
 }
 
 function handlePutForm(id) {
-    var overlay = document.querySelector(".overlay");
-    var putForm = document.querySelector("#put-form");
+    const overlay = document.querySelector(".overlay");
+    const putForm = document.querySelector("#put-form");
+    const confirmPutBtn = putForm.querySelector("#confirm-put-btn");
+
+    putForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+    });
 
     overlay.classList.add("active");
     putForm.classList.add("active");
@@ -136,89 +151,55 @@ function handlePutForm(id) {
         putForm.classList.remove("active");
     };
 
-    putForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-    });
-
-    var confirmPutBtn = putForm.querySelector("#confirm-put-btn");
+    fillPutForm(id);
 
     confirmPutBtn.onclick = function () {
-        var name = putForm.querySelector('input[name="name"]').value;
-        var genderRadios = putForm.querySelectorAll('input[name="gender"]');
-        var dateOfBirth = putForm.querySelector('input[name="dateOfBirth"]').value;
-        var address = putForm.querySelector('input[name="address"]').value;
-        var phoneNumberInput = putForm.querySelector('input[name="phoneNumber"]');
-        var phoneNumber = phoneNumberInput.value;
-        var emailInput = putForm.querySelector('input[name="email"]');
-        var email = emailInput.value;
+        const name = putForm.querySelector('input[name="name"]').value;
+        const genderRadios = putForm.querySelectorAll('input[name="gender"]');
+        const selectedGender = getSelectedGender(genderRadios);
+        const dateOfBirth = putForm.querySelector('input[name="dateOfBirth"]').value;
+        const address = putForm.querySelector('input[name="address"]').value;
+        const phoneNumber = putForm.querySelector('input[name="phoneNumber"]').value;
+        const email = putForm.querySelector('input[name="email"]').value;
 
-        if (name && genderRadios && dateOfBirth) {
-            var phoneNumberPattern = /^0\d{9}$/;
-            if (phoneNumber === "" || phoneNumberPattern.test(phoneNumber)) {
-                phoneNumberInput.setCustomValidity("");
-                if (email === "" || emailInput.checkValidity()) {
-                    var newStudent = {
-                        name: name,
-                        gender: getSelectedGender(genderRadios),
-                        dateOfBirth: dateOfBirth,
-                        address: address,
-                        phoneNumber: phoneNumber,
-                        email: email,
-                    };
-                    handlePutStudent(id, newStudent);
-                    overlay.classList.remove("active");
-                    putForm.classList.remove("active");
-                }
-            } else {
-                phoneNumberInput.setCustomValidity("Số điện thoại không hợp lệ");
-            }
+        if (!name) {
+            return alert("Bạn cần nhập họ tên!");
         }
+
+        if (!selectedGender) {
+            return alert("Bạn cần chọn giới tính!");
+        }
+
+        if (!dateOfBirth) {
+            return alert("Bạn cần nhập ngày sinh!");
+        }
+
+        if (!(phoneNumber === "" || isPhoneNumber(phoneNumber))) {
+            return alert("Số điện thoại không hợp lệ!");
+        }
+
+        if (!(email === "" || isEmail(email))) {
+            return alert("Email không hợp lệ!");
+        }
+
+        const newStudent = {
+            name,
+            gender: selectedGender,
+            dateOfBirth,
+            address,
+            phoneNumber,
+            email,
+        };
+
+        handlePutStudent(id, newStudent);
+        putForm.classList.remove("active");
     };
-
-    fillPutForm(id);
-}
-
-function fillPutForm(id) {
-    // Lấy dữ liệu sinh viên từ bảng
-    var student = getStudentById(id);
-    // Gán giá trị vào các trường nhập liệu trong form
-    var putForm = document.querySelector("#put-form");
-    putForm.querySelector('input[name="name"]').value = student.name;
-    putForm.querySelector('input[value="' + student.gender + '"]').checked = true;
-    putForm.querySelector('input[name="dateOfBirth"]').value = formatDateForInput(student.dateOfBirth);
-    putForm.querySelector('input[name="address"]').value = student.address;
-    putForm.querySelector('input[name="phoneNumber"]').value = student.phoneNumber;
-    putForm.querySelector('input[name="email"]').value = student.email;
-}
-
-function getStudentById(id) {
-    // Lấy danh sách sinh viên từ bảng
-    var studentTableBody = document.querySelector("#student-table tbody");
-    var studentRows = studentTableBody.querySelectorAll("tr");
-
-    // Tìm sinh viên theo id
-    for (var i = 0; i < studentRows.length; i++) {
-        var studentId = studentRows[i].querySelector("td:nth-child(2)").textContent;
-        if (studentId === id.toString()) {
-            // Trả về dữ liệu sinh viên
-            return {
-                name: studentRows[i].querySelector("td:nth-child(3)").textContent,
-                gender: studentRows[i].querySelector("td:nth-child(4)").textContent,
-                dateOfBirth: studentRows[i].querySelector("td:nth-child(5)").textContent,
-                address: studentRows[i].querySelector("td:nth-child(6)").textContent,
-                phoneNumber: studentRows[i].querySelector("td:nth-child(7)").textContent,
-                email: studentRows[i].querySelector("td:nth-child(8)").textContent,
-            };
-        }
-    }
-
-    return null;
 }
 
 function getSelectedGender(genderRadios) {
-    var selectedGender = "";
+    let selectedGender = "";
 
-    for (var i = 0; i < genderRadios.length; i++) {
+    for (let i = 0; i < genderRadios.length; i++) {
         if (genderRadios[i].checked) {
             selectedGender = genderRadios[i].value;
             break;
@@ -239,12 +220,80 @@ function formatDate(date) {
 }
 
 function formatDateForInput(date) {
-    var parts = date.split("/");
+    const parts = date.split("/");
 
-    var day = parts[0];
-    var month = parts[1];
-    var year = parts[2];
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
 
-    var formattedDate = `${year}-${month}-${day}`;
+    const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
+}
+
+function isPhoneNumber(number) {
+    const phoneNumberPattern = /^0\d{9}$/;
+    return phoneNumberPattern.test(number);
+}
+
+function isEmail(string) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(string);
+}
+
+function showNotice(text) {
+    const overlay = document.querySelector(".overlay");
+    const notice = document.querySelector(".notice");
+    const noticeContent = document.querySelector(".notice .content");
+    const noticeBtn = document.querySelector(".notice-btn .btn");
+
+    overlay.classList.add("active");
+    notice.classList.add("active");
+    noticeContent.innerText = text;
+
+    overlay.onclick = () => {
+        overlay.classList.remove("active");
+        notice.classList.remove("active");
+    };
+
+    noticeBtn.onclick = () => {
+        overlay.classList.remove("active");
+        notice.classList.remove("active");
+    };
+}
+
+function fillPutForm(id) {
+    // Lấy dữ liệu sinh viên từ bảng
+    const student = getStudentById(id);
+    // Gán giá trị vào các trường nhập liệu trong form
+    const putForm = document.querySelector("#put-form");
+    putForm.querySelector('input[name="name"]').value = student.name;
+    putForm.querySelector('input[value="' + student.gender + '"]').checked = true;
+    putForm.querySelector('input[name="dateOfBirth"]').value = formatDateForInput(student.dateOfBirth);
+    putForm.querySelector('input[name="address"]').value = student.address;
+    putForm.querySelector('input[name="phoneNumber"]').value = student.phoneNumber;
+    putForm.querySelector('input[name="email"]').value = student.email;
+}
+
+function getStudentById(id) {
+    // Lấy danh sách sinh viên từ bảng
+    const studentTableBody = document.querySelector("#student-table tbody");
+    const studentRows = studentTableBody.querySelectorAll("tr");
+
+    // Tìm sinh viên theo id
+    for (let i = 0; i < studentRows.length; i++) {
+        const studentId = studentRows[i].querySelector("td:nth-child(2)").textContent;
+        if (studentId === id.toString()) {
+            // Trả về dữ liệu sinh viên
+            return {
+                name: studentRows[i].querySelector("td:nth-child(3)").textContent,
+                gender: studentRows[i].querySelector("td:nth-child(4)").textContent,
+                dateOfBirth: studentRows[i].querySelector("td:nth-child(5)").textContent,
+                address: studentRows[i].querySelector("td:nth-child(6)").textContent,
+                phoneNumber: studentRows[i].querySelector("td:nth-child(7)").textContent,
+                email: studentRows[i].querySelector("td:nth-child(8)").textContent,
+            };
+        }
+    }
+
+    return null;
 }
