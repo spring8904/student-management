@@ -1,4 +1,6 @@
 const studentsAPI = "https://6499635779fbe9bcf83f2553.mockapi.io/api/v1/students";
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 
 function start() {
     getStudents(renderStudents);
@@ -16,7 +18,7 @@ function getStudents(callback) {
 }
 
 function renderStudents(students) {
-    const studentTableBody = document.querySelector("#student-table tbody");
+    const studentTableBody = $("#student-table tbody");
     let count = 1;
     const htmls = students.map(
         (student) => `<tr>
@@ -80,45 +82,38 @@ function handlePutStudent(id, data) {
 }
 
 function handlePostForm() {
-    const postForm = document.querySelector("#post-form");
-    const postBtn = postForm.querySelector("#post-btn");
+    const postForm = $("#post-form");
+    const postBtn = $("#post-btn");
 
-    postForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-    });
+    postForm.addEventListener("submit", (event) => event.preventDefault());
 
-    postBtn.onclick = function () {
-        const name = postForm.querySelector('input[name="name"]').value;
-        const genderRadios = postForm.querySelectorAll('input[name="gender"]');
+    postBtn.onclick = () => {
+        const name = $('#post-form input[name="name"]').value;
+        const genderRadios = $$('#post-form input[name="gender"]');
         const selectedGender = getSelectedGender(genderRadios);
-        const dateOfBirth = postForm.querySelector('input[name="dateOfBirth"]').value;
-        const address = postForm.querySelector('input[name="address"]').value;
-        const phoneNumber = postForm.querySelector('input[name="phoneNumber"]').value;
-        const email = postForm.querySelector('input[name="email"]').value;
+        const dateOfBirth = $('#post-form input[name="dateOfBirth"]').value;
+        const address = $('#post-form input[name="address"]').value;
+        const phoneNumber = $('#post-form input[name="phoneNumber"]').value;
+        const email = $('#post-form input[name="email"]').value;
 
         if (!name) {
-            showNotice("Bạn cần nhập họ tên!");
-            return;
+            return showNotice("Bạn cần nhập họ tên!");
         }
 
         if (!selectedGender) {
-            showNotice("Bạn cần chọn giới tính!");
-            return;
+            return showNotice("Bạn cần chọn giới tính!");
         }
 
         if (!dateOfBirth) {
-            showNotice("Bạn cần nhập ngày sinh!");
-            return;
+            return showNotice("Bạn cần nhập ngày sinh!");
         }
 
         if (!(phoneNumber === "" || isPhoneNumber(phoneNumber))) {
-            showNotice("Số điện thoại không hợp lệ!");
-            return;
+            return showNotice("Số điện thoại không hợp lệ!");
         }
 
         if (!(email === "" || isEmail(email))) {
-            showNotice("Email không hợp lệ");
-            return;
+            return showNotice("Email không hợp lệ!");
         }
 
         const newStudent = {
@@ -135,13 +130,11 @@ function handlePostForm() {
 }
 
 function handlePutForm(id) {
-    const overlay = document.querySelector(".overlay");
-    const putForm = document.querySelector("#put-form");
-    const confirmPutBtn = putForm.querySelector("#confirm-put-btn");
+    const overlay = $(".overlay");
+    const putForm = $("#put-form");
+    const confirmPutBtn = $("#confirm-put-btn");
 
-    putForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-    });
+    putForm.addEventListener("submit", (event) => event.preventDefault());
 
     overlay.classList.add("active");
     putForm.classList.add("active");
@@ -153,14 +146,14 @@ function handlePutForm(id) {
 
     fillPutForm(id);
 
-    confirmPutBtn.onclick = function () {
-        const name = putForm.querySelector('input[name="name"]').value;
-        const genderRadios = putForm.querySelectorAll('input[name="gender"]');
+    confirmPutBtn.onclick = () => {
+        const name = $('#put-form input[name="name"]').value;
+        const genderRadios = $$('#put-form input[name="gender"]');
         const selectedGender = getSelectedGender(genderRadios);
-        const dateOfBirth = putForm.querySelector('input[name="dateOfBirth"]').value;
-        const address = putForm.querySelector('input[name="address"]').value;
-        const phoneNumber = putForm.querySelector('input[name="phoneNumber"]').value;
-        const email = putForm.querySelector('input[name="email"]').value;
+        const dateOfBirth = $('#put-form input[name="dateOfBirth"]').value;
+        const address = $('#put-form input[name="address"]').value;
+        const phoneNumber = $('#put-form input[name="phoneNumber"]').value;
+        const email = $('#put-form input[name="email"]').value;
 
         if (!name) {
             return alert("Bạn cần nhập họ tên!");
@@ -241,10 +234,10 @@ function isEmail(string) {
 }
 
 function showNotice(text) {
-    const overlay = document.querySelector(".overlay");
-    const notice = document.querySelector(".notice");
-    const noticeContent = document.querySelector(".notice .content");
-    const noticeBtn = document.querySelector(".notice-btn .btn");
+    const overlay = $(".overlay");
+    const notice = $(".notice");
+    const noticeContent = $(".notice .content");
+    const noticeBtn = $(".notice-btn .btn");
 
     overlay.classList.add("active");
     notice.classList.add("active");
@@ -265,19 +258,17 @@ function fillPutForm(id) {
     // Lấy dữ liệu sinh viên từ bảng
     const student = getStudentById(id);
     // Gán giá trị vào các trường nhập liệu trong form
-    const putForm = document.querySelector("#put-form");
-    putForm.querySelector('input[name="name"]').value = student.name;
-    putForm.querySelector('input[value="' + student.gender + '"]').checked = true;
-    putForm.querySelector('input[name="dateOfBirth"]').value = formatDateForInput(student.dateOfBirth);
-    putForm.querySelector('input[name="address"]').value = student.address;
-    putForm.querySelector('input[name="phoneNumber"]').value = student.phoneNumber;
-    putForm.querySelector('input[name="email"]').value = student.email;
+    $('#put-form input[name="name"]').value = student.name;
+    $('#put-form input[value="' + student.gender + '"]').checked = true;
+    $('#put-form input[name="dateOfBirth"]').value = formatDateForInput(student.dateOfBirth);
+    $('#put-form input[name="address"]').value = student.address;
+    $('#put-form input[name="phoneNumber"]').value = student.phoneNumber;
+    $('#put-form input[name="email"]').value = student.email;
 }
 
 function getStudentById(id) {
     // Lấy danh sách sinh viên từ bảng
-    const studentTableBody = document.querySelector("#student-table tbody");
-    const studentRows = studentTableBody.querySelectorAll("tr");
+    const studentRows = $$("#student-table tbody tr");
 
     // Tìm sinh viên theo id
     for (let i = 0; i < studentRows.length; i++) {
