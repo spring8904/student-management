@@ -53,17 +53,19 @@ function handlePostStudent(data) {
 }
 
 function handleDeleteStudent(id) {
-    fetch(studentsAPI + "/" + id, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-        .then((response) => response.json())
-        .then(() => {
-            getStudents(renderStudents);
-            showNotice("Xóa thành công");
-        });
+    if (confirm("Xác nhận xóa thông tin")) {
+        fetch(studentsAPI + "/" + id, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then(() => {
+                getStudents(renderStudents);
+                showNotice("Xóa thành công");
+            });
+    }
 }
 
 function handlePutStudent(id, data) {
@@ -147,45 +149,47 @@ function handlePutForm(id) {
     fillPutForm(id);
 
     confirmPutBtn.onclick = () => {
-        const name = $('#put-form input[name="name"]').value;
-        const genderRadios = $$('#put-form input[name="gender"]');
-        const selectedGender = getSelectedGender(genderRadios);
-        const dateOfBirth = $('#put-form input[name="dateOfBirth"]').value;
-        const address = $('#put-form input[name="address"]').value;
-        const phoneNumber = $('#put-form input[name="phoneNumber"]').value;
-        const email = $('#put-form input[name="email"]').value;
+        if (confirm("Xác nhận sửa thông tin")) {
+            const name = $('#put-form input[name="name"]').value;
+            const genderRadios = $$('#put-form input[name="gender"]');
+            const selectedGender = getSelectedGender(genderRadios);
+            const dateOfBirth = $('#put-form input[name="dateOfBirth"]').value;
+            const address = $('#put-form input[name="address"]').value;
+            const phoneNumber = $('#put-form input[name="phoneNumber"]').value;
+            const email = $('#put-form input[name="email"]').value;
 
-        if (!name) {
-            return alert("Bạn cần nhập họ tên!");
+            if (!name) {
+                return alert("Bạn cần nhập họ tên!");
+            }
+
+            if (!selectedGender) {
+                return alert("Bạn cần chọn giới tính!");
+            }
+
+            if (!dateOfBirth) {
+                return alert("Bạn cần nhập ngày sinh!");
+            }
+
+            if (!(phoneNumber === "" || isPhoneNumber(phoneNumber))) {
+                return alert("Số điện thoại không hợp lệ!");
+            }
+
+            if (!(email === "" || isEmail(email))) {
+                return alert("Email không hợp lệ!");
+            }
+
+            const newStudent = {
+                name,
+                gender: selectedGender,
+                dateOfBirth,
+                address,
+                phoneNumber,
+                email,
+            };
+
+            handlePutStudent(id, newStudent);
+            putForm.classList.remove("active");
         }
-
-        if (!selectedGender) {
-            return alert("Bạn cần chọn giới tính!");
-        }
-
-        if (!dateOfBirth) {
-            return alert("Bạn cần nhập ngày sinh!");
-        }
-
-        if (!(phoneNumber === "" || isPhoneNumber(phoneNumber))) {
-            return alert("Số điện thoại không hợp lệ!");
-        }
-
-        if (!(email === "" || isEmail(email))) {
-            return alert("Email không hợp lệ!");
-        }
-
-        const newStudent = {
-            name,
-            gender: selectedGender,
-            dateOfBirth,
-            address,
-            phoneNumber,
-            email,
-        };
-
-        handlePutStudent(id, newStudent);
-        putForm.classList.remove("active");
     };
 }
 
