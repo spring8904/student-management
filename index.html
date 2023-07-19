@@ -4,8 +4,20 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Quản lý sinh viên</title>
-        <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">
-        <link rel="stylesheet" href="style.css" />
+        <link
+            rel="icon"
+            class="js-site-favicon"
+            type="image/svg+xml"
+            href="https://github.githubassets.com/favicons/favicon.svg"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+            integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link rel="stylesheet" href="./css/style.css" />
     </head>
     <body>
         <div class="wide">
@@ -15,30 +27,36 @@
                 </div>
                 <form class="post-form__main">
                     <span class="description">* Thông tin bắt buộc</span>
-                    <div>
-                        <label class="label-input" for="name">Họ và tên<span>*</span></label>
-                        <input type="text" name="name" id="name" />
+                    <div class="form-group">
+                        <label class="form-label" for="name">Họ và tên<span>*</span></label>
+                        <input type="text" name="name" id="name" placeholder="Nhập họ và tên" />
+                        <span class="form-message"></span>
                     </div>
-                    <div>
-                        <label class="label-input mt10">Giới tính<span>*</span></label>
+                    <div class="form-group">
+                        <label style="margin: 10px 0 0" class="form-label">Giới tính<span>*</span></label>
                         <label><input type="radio" name="gender" value="Nam" />Nam</label>
                         <label><input class="ml15" type="radio" name="gender" value="Nữ" />Nữ</label>
+                        <span style="display: block" class="form-message"></span>
                     </div>
-                    <div>
-                        <label class="label-input" for="date-of-birth">Ngày sinh<span>*</span></label>
+                    <div class="form-group">
+                        <label class="form-label" for="date-of-birth">Ngày sinh<span>*</span></label>
                         <input type="date" name="dateOfBirth" id="date-of-birth" />
+                        <span class="form-message"></span>
                     </div>
-                    <div>
-                        <label class="label-input" for="address">Địa chỉ</label>
-                        <input type="text" name="address" id="address" />
+                    <div class="form-group">
+                        <label class="form-label" for="address">Địa chỉ</label>
+                        <input type="text" name="address" id="address" placeholder="Nhập địa chỉ" />
+                        <span class="form-message"></span>
                     </div>
-                    <div>
-                        <label class="label-input" for="phone-number">Số điện thoại</label>
-                        <input type="number" name="phoneNumber" id="phone-number" />
+                    <div class="form-group">
+                        <label class="form-label" for="phone-number">Số điện thoại</label>
+                        <input type="number" name="phoneNumber" id="phone-number" placeholder="Nhập số điện thoại" />
+                        <span class="form-message"></span>
                     </div>
-                    <div>
-                        <label class="label-input" for="email">Email</label>
-                        <input type="text" name="email" id="email" />
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="text" name="email" id="email" placeholder="Nhập email" />
+                        <span class="form-message"></span>
                     </div>
                     <button id="post-btn" class="mt20 mr10 btn btn--green" type="submit">Thêm</button>
                     <button class="btn btn--yellow" type="reset">Nhập lại</button>
@@ -87,41 +105,55 @@
                 <span>Sửa thông tin sinh viên</span>
             </div>
             <form class="put-form__main">
-                <div>
-                    <label class="label-input" for="name">Họ và tên<span>*</span></label>
+                <div class="form-group">
+                    <label class="form-label" for="name">Họ và tên<span>*</span></label>
                     <input type="text" name="name" id="name" />
+                    <span class="form-message"></span>
                 </div>
-                <div>
-                    <label class="label-input mt10">Giới tính<span>*</span></label>
+                <div class="form-group">
+                    <label style="margin: 10px 0 0" class="form-label">Giới tính<span>*</span></label>
                     <label><input type="radio" name="gender" value="Nam" />Nam</label>
                     <label><input class="ml15" type="radio" name="gender" value="Nữ" />Nữ</label>
+                    <span style="display: block" class="form-message"></span>
                 </div>
-                <div>
-                    <label class="label-input" for="date-of-birth">Ngày sinh<span>*</span></label>
+                <div class="form-group">
+                    <label class="form-label" for="date-of-birth">Ngày sinh<span>*</span></label>
                     <input type="date" name="dateOfBirth" id="date-of-birth" />
+                    <span class="form-message"></span>
                 </div>
-                <div>
-                    <label class="label-input" for="address">Địa chỉ</label>
+                <div class="form-group">
+                    <label class="form-label" for="address">Địa chỉ</label>
                     <input type="text" name="address" id="address" />
+                    <span class="form-message"></span>
                 </div>
-                <div>
-                    <label class="label-input" for="phone-number">Số điện thoại</label>
+                <div class="form-group">
+                    <label class="form-label" for="phone-number">Số điện thoại</label>
                     <input type="number" name="phoneNumber" id="phone-number" />
+                    <span class="form-message"></span>
                 </div>
-                <div>
-                    <label class="label-input" for="email">Email</label>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
                     <input type="text" name="email" id="email" />
+                    <span class="form-message"></span>
                 </div>
                 <button id="confirm-put-btn" class="mt20 mr10 btn btn--green" type="submit">Sửa</button>
                 <button class="btn btn--yellow" type="reset">Nhập lại</button>
             </form>
         </div>
-        <div class="notice modal">
+        <div class="alert modal">
             <div class="content">Đây là thông báo</div>
-            <div class="notice-btn">
+            <div class="alert-btn">
                 <button class="btn btn--blue">OK</button>
             </div>
         </div>
-        <script src="main.js"></script>
+        <div class="confirm modal">
+            <div class="content">Đây là thông báo</div>
+            <div class="confirm-btn">
+                <button class="btn btn--blue">OK</button>
+                <button class="btn btn--white">Hủy</button>
+            </div>
+        </div>
+        <script src="./js/validator.js"></script>
+        <script src="./js/main.js"></script>
     </body>
 </html>

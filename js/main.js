@@ -4,7 +4,6 @@ const $$ = document.querySelectorAll.bind(document);
 
 function start() {
     getStudents(renderStudents);
-
     handlePostForm();
 }
 
@@ -48,24 +47,26 @@ function handlePostStudent(data) {
         .then((response) => response.json())
         .then(() => {
             getStudents(renderStudents);
-            showNotice("Thêm thành công");
+            showAlert("Thêm thành công");
         });
 }
 
 function handleDeleteStudent(id) {
-    if (confirm("Xác nhận xóa thông tin")) {
-        fetch(studentsAPI + "/" + id, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => response.json())
-            .then(() => {
-                getStudents(renderStudents);
-                showNotice("Xóa thành công");
-            });
-    }
+    showConfirm("Xác nhận xóa thông tin", (result) => {
+        if (result) {
+            fetch(studentsAPI + "/" + id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then(() => {
+                    getStudents(renderStudents);
+                    showAlert("Xóa thành công");
+                });
+        }
+    });
 }
 
 function handlePutStudent(id, data) {
@@ -79,64 +80,31 @@ function handlePutStudent(id, data) {
         .then((response) => response.json())
         .then(() => {
             getStudents(renderStudents);
-            showNotice("Sửa thành công");
+            showAlert("Sửa thành công");
         });
 }
 
 function handlePostForm() {
-    const postForm = $("#post-form");
-    const postBtn = $("#post-btn");
-
-    postForm.addEventListener("submit", (event) => event.preventDefault());
-
-    postBtn.onclick = () => {
-        const name = $('#post-form input[name="name"]').value;
-        const genderRadios = $$('#post-form input[name="gender"]');
-        const selectedGender = getSelectedGender(genderRadios);
-        const dateOfBirth = $('#post-form input[name="dateOfBirth"]').value;
-        const address = $('#post-form input[name="address"]').value;
-        const phoneNumber = $('#post-form input[name="phoneNumber"]').value;
-        const email = $('#post-form input[name="email"]').value;
-
-        if (!name) {
-            return showNotice("Bạn cần nhập họ tên!");
-        }
-
-        if (!selectedGender) {
-            return showNotice("Bạn cần chọn giới tính!");
-        }
-
-        if (!dateOfBirth) {
-            return showNotice("Bạn cần nhập ngày sinh!");
-        }
-
-        if (!(phoneNumber === "" || isPhoneNumber(phoneNumber))) {
-            return showNotice("Số điện thoại không hợp lệ!");
-        }
-
-        if (!(email === "" || isEmail(email))) {
-            return showNotice("Email không hợp lệ!");
-        }
-
-        const newStudent = {
-            name,
-            gender: selectedGender,
-            dateOfBirth,
-            address,
-            phoneNumber,
-            email,
-        };
-
-        handlePostStudent(newStudent);
-    };
+    validator({
+        form: ".post-form__main",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+            validator.isRequired("#name", "Vui lòng nhập tên đầy đủ của bạn"),
+            validator.isRequired("#date-of-birth", "Vui lòng nhập ngày sinh của bạn"),
+            validator.isSelected("input[name='gender']", "Vui lòng chọn giới tính phù hợp"),
+            validator.isEmail("#email"),
+            validator.isPhoneNumber("#phone-number"),
+        ],
+        onSubmit(data) {
+            handlePostStudent(data);
+        },
+    });
 }
 
 function handlePutForm(id) {
     const overlay = $(".overlay");
     const putForm = $("#put-form");
-    const confirmPutBtn = $("#confirm-put-btn");
-
-    putForm.addEventListener("submit", (event) => event.preventDefault());
 
     overlay.classList.add("active");
     putForm.classList.add("active");
@@ -148,62 +116,22 @@ function handlePutForm(id) {
 
     fillPutForm(id);
 
-    confirmPutBtn.onclick = () => {
-        if (confirm("Xác nhận sửa thông tin")) {
-            const name = $('#put-form input[name="name"]').value;
-            const genderRadios = $$('#put-form input[name="gender"]');
-            const selectedGender = getSelectedGender(genderRadios);
-            const dateOfBirth = $('#put-form input[name="dateOfBirth"]').value;
-            const address = $('#put-form input[name="address"]').value;
-            const phoneNumber = $('#put-form input[name="phoneNumber"]').value;
-            const email = $('#put-form input[name="email"]').value;
-
-            if (!name) {
-                return alert("Bạn cần nhập họ tên!");
-            }
-
-            if (!selectedGender) {
-                return alert("Bạn cần chọn giới tính!");
-            }
-
-            if (!dateOfBirth) {
-                return alert("Bạn cần nhập ngày sinh!");
-            }
-
-            if (!(phoneNumber === "" || isPhoneNumber(phoneNumber))) {
-                return alert("Số điện thoại không hợp lệ!");
-            }
-
-            if (!(email === "" || isEmail(email))) {
-                return alert("Email không hợp lệ!");
-            }
-
-            const newStudent = {
-                name,
-                gender: selectedGender,
-                dateOfBirth,
-                address,
-                phoneNumber,
-                email,
-            };
-
-            handlePutStudent(id, newStudent);
+    validator({
+        form: ".put-form__main",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+            validator.isRequired("#name", "Vui lòng nhập tên đầy đủ của bạn"),
+            validator.isRequired("#date-of-birth", "Vui lòng nhập ngày sinh của bạn"),
+            validator.isSelected("input[name='gender']", "Vui lòng chọn giới tính phù hợp"),
+            validator.isEmail("#email"),
+            validator.isPhoneNumber("#phone-number"),
+        ],
+        onSubmit(data) {
+            handlePutStudent(id, data);
             putForm.classList.remove("active");
-        }
-    };
-}
-
-function getSelectedGender(genderRadios) {
-    let selectedGender = "";
-
-    for (let i = 0; i < genderRadios.length; i++) {
-        if (genderRadios[i].checked) {
-            selectedGender = genderRadios[i].value;
-            break;
-        }
-    }
-
-    return selectedGender;
+        },
+    });
 }
 
 function formatDate(date) {
@@ -227,34 +155,53 @@ function formatDateForInput(date) {
     return formattedDate;
 }
 
-function isPhoneNumber(number) {
-    const phoneNumberPattern = /^0\d{9}$/;
-    return phoneNumberPattern.test(number);
-}
-
-function isEmail(string) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(string);
-}
-
-function showNotice(text) {
+function showAlert(text) {
     const overlay = $(".overlay");
-    const notice = $(".notice");
-    const noticeContent = $(".notice .content");
-    const noticeBtn = $(".notice-btn .btn");
+    const alert = $(".alert");
+    const alertContent = $(".alert .content");
+    const alertBtn = $(".alert-btn .btn");
 
     overlay.classList.add("active");
-    notice.classList.add("active");
-    noticeContent.innerText = text;
+    alert.classList.add("active");
+    alertContent.innerText = text;
 
     overlay.onclick = () => {
         overlay.classList.remove("active");
-        notice.classList.remove("active");
+        alert.classList.remove("active");
     };
 
-    noticeBtn.onclick = () => {
+    alertBtn.onclick = () => {
         overlay.classList.remove("active");
-        notice.classList.remove("active");
+        alert.classList.remove("active");
+    };
+}
+
+function showConfirm(text, callback) {
+    const overlay = $(".overlay");
+    const confirm = $(".confirm");
+    const confirmContent = $(".confirm .content");
+    const confirmBtn = $(".confirm-btn .btn--blue");
+    const cancelBtn = $(".confirm-btn .btn--white");
+
+    overlay.classList.add("active");
+    confirm.classList.add("active");
+    confirmContent.innerText = text;
+
+    overlay.onclick = () => {
+        overlay.classList.remove("active");
+        confirm.classList.remove("active");
+        callback(false);
+    };
+
+    cancelBtn.onclick = () => {
+        overlay.classList.remove("active");
+        confirm.classList.remove("active");
+        callback(false);
+    };
+
+    confirmBtn.onclick = () => {
+        confirm.classList.remove("active");
+        callback(true);
     };
 }
 

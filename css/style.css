@@ -32,19 +32,6 @@ html {
     margin: 0 auto;
 }
 
-footer {
-    background-color: #097021;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-footer span {
-    color: #fff;
-}
-
 /* post & put form */
 #post-form {
     width: 100%;
@@ -74,38 +61,34 @@ footer span {
 }
 
 .post-form__main .description {
+    color: #dc3545;
     float: right;
 }
 
-.post-form__main span,
-.put-form__main span {
+.form-label span {
     color: #dc3545;
     margin-left: 5px;
 }
 
-.post-form__main .label-input,
-.put-form__main .label-input {
+.form-label {
     display: inline-block;
     margin: 5px 0;
 }
 
-#post-form input:not([type="radio"]),
-#put-form input:not([type="radio"]) {
+input:not([type="radio"]) {
     width: 100%;
     padding: 10px;
     border: 1px solid #e0e4e8;
     border-radius: 3px;
 }
 
-#post-form input:not([type="radio"]):focus,
-#put-form input:not([type="radio"]):focus {
+input:not([type="radio"]):focus {
     border: 1px solid #c5c8cc;
     outline: none;
     box-shadow: 5px 5px 5px #e0e4e8;
 }
 
-#post-form input[type="radio"],
-#put-form input[type="radio"] {
+input[type="radio"] {
     margin-left: 5px;
     margin-right: 5px;
 }
@@ -139,6 +122,23 @@ footer span {
 .btn--blue {
     background-color: #2f7de3;
     color: #fff;
+}
+
+.btn--white {
+    background-color: #fff;
+    color: #2f7de3;
+    border: 1px solid #e0e0e0;
+}
+
+.form-group.invalid input:not([type="radio"]) {
+    border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+    color: #f33a58;
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 4px;
 }
 
 /* table */
@@ -212,28 +212,50 @@ footer span {
     transition: transform ease-in-out 250ms;
 }
 
-.notice {
+.alert,
+.confirm {
     width: 40%;
 }
 
-.notice.active {
+.alert.active,
+.confirm.active {
     transform: translate(-50%, -50%) scale(1);
 }
 
-.notice .content {
+.alert .content,
+.confirm .content {
     padding: 20px;
     color: #1c1b1b;
     border-bottom: 1px solid #ccc;
 }
 
-.notice-btn {
+.alert-btn,
+.confirm-btn {
     padding: 10px 20px;
     display: flex;
     justify-content: end;
 }
 
-.notice-btn .btn {
+.alert-btn .btn,
+.confirm-btn .btn {
     padding: 5px 18px;
+}
+
+.confirm-btn .btn--white {
+    margin-left: 8px;
+}
+
+footer {
+    background-color: #097021;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+footer span {
+    color: #fff;
 }
 
 /* responsive */
@@ -252,7 +274,8 @@ footer span {
         max-height: 80%;
     }
 
-    .notice {
+    .alert,
+    .confirm {
         width: 70%;
     }
 }
